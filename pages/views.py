@@ -87,3 +87,19 @@ def todos(request):
     print(itemErrandDetail[0].todolist.name)
     return render(request, 'ToDoItems.html',
                   {'ToDoItemDetail': itemErrandDetail})
+
+from django.shortcuts import render, redirect
+from .forms import RegisterForm
+
+def register(response):
+    # Handle POST request.
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect("../") # Go to home page
+    # Handle GET request.
+    else:
+        form = RegisterForm()
+    return render(response, "registration/register.html", {"form":form})
