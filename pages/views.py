@@ -10,6 +10,7 @@ from django.urls import reverse
 import pickle
 import pandas as pd
 import pdb
+from django.contrib.auth import logout
 
 from django.conf import settings
 
@@ -98,8 +99,17 @@ def register(response):
         if form.is_valid():
             form.save()
 
-            return redirect("../") # Go to home page
+            return HttpResponseRedirect(reverse('message', kwargs={'msg': "Your are registered.", 'title': "Success!"}, ))
+
     # Handle GET request.
     else:
         form = RegisterForm()
     return render(response, "registration/register.html", {"form":form})
+
+def message(request, msg, title):
+    return render(request, 'message.html', {'msg': msg, 'title': title })
+
+def logoutView(request):
+    logout(request)
+    print("*****  You are logged out.")
+    return HttpResponseRedirect(reverse('home' ))
