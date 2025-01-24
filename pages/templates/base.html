@@ -1,3 +1,4 @@
+<!-- templates/base.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,14 +20,20 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                 <a class="nav-link" href="{% url 'about' %}">About</a>
                 <a class="nav-link" href="{% url 'todos' %}">Todos</a>
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'secret' %}">Secret Area</a>
+                <span class="navbar-text">
+                    Welcome, <strong>{{ user.username }}</strong>!
+                </span>
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-
+                {% else %}
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                {% endif %}
             </div>
         </div>
     </div>
 </nav>
-
 
 <div class="d-flex flex-row bd-highlight mb-3">
     <div class="p-1 bd-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
